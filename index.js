@@ -8,7 +8,7 @@ app.listen(
 )
 
 app.post('/APITEST', (req,res) => {
-	cosole.log(req.body)
+	console.log(req.body)
 	res.status(200);
 	res.json({responseMessage: "MESSAGE RECEIVED"});
 });
