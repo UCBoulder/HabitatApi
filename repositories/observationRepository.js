@@ -1,8 +1,8 @@
 //for CRUD actions (Create Read Update Delete)
 
-const Item = require('../models/dataModel')
+const Observation = require('../models/dataModel')
 
-class itemRepository {
+class observationRepository {
     constructor() {
         this.items = [];
       }
@@ -18,4 +18,4 @@ class itemRepository {
     }
 }
 
-module.exports = itemRepository;
+module.exports = observationRepository;

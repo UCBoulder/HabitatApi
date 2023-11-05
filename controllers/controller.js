@@ -1,6 +1,6 @@
 //For HTP Handling (funcitons using http fetch data)
 
-const itemRepository = require('../repositories/itemRepository');
+const ObservationRepository = require('../repositories/observationRepository');
 const model = require('../models/dataModel');
 
 function create(req,res){
