@@ -1,21 +1,10 @@
-const app  = require('express')();
-const PORT = 8080;
+const express = require('express');
+const app = express();
+const PORT = 3000;
 
-app.listen(
-	PORT,
-	() => console.log('alive on http://localhost:8080')
-)
+app.use(express.json());
 
-app.get('', (req,res) => {
-	res.status(200).send({
-		cows: '',
-		bogs: '',
-		WORLD: 'Hello'
-	})
-})
+const itemRoutes = require('./routes/Routes');
+app.use('/', itemRoutes); // Use '/items' as the base path
 
-app.get('/secret', (req, res) => {
-	res.status(200).send({
-		ok:"you found it"
-	})
-})
+app.listen(PORT, () => console.log('Server is running on http://localhost:3000'));
