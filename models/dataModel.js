@@ -16,7 +16,8 @@ const dataModel = {
 
     llTest: {
         latitude: Number,
-        longitude: Number
+        longitude: Number,
+        verification: Number
     }
 
 }
