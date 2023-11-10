@@ -3,6 +3,7 @@ const PORT = 8080;
 
 app.use(express.json());
 
+<<<<<<< Updated upstream
 app.listen(
 	PORT,
 	() => console.log('alive on http://localhost:8080')
@@ -42,4 +43,8 @@ app.get('/secret', (req, res) => {
   		ok:"you found it"
   	})
 })
+=======
+const itemRoutes = require('./routes/routes');
+app.use('/', itemRoutes); // Use '/' as the base path
+>>>>>>> Stashed changes
 
