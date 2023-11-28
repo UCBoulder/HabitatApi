@@ -1,3 +1,8 @@
+import { BatchWriteItemCommand, BatchWriteItemCommandInput, AttributeValue } from "@aws-sdk/client-dynamodb";
+import { Observation } from './interfaces';
+import { client } from "../index.js";
+import { insertObservation } from "../DB-files/DB-Operations/insertObservation.js";
+
 //For HTP Handling (funcitons using http fetch data)
 
 const ObservationRepository = require('../repositories/observationRepository');
@@ -33,9 +38,36 @@ function arrayTest(req,res){
         { latitude:38.53750984924373, longitude: -106.9257911397735, verification: 2}
     ];
     res.json(points)
-
-    
 }
+
+function addObs(req, res, {
+    UserID,
+    ObservationID,
+    PhotoFileLocation,
+    ObsDate,
+    LocationData,
+    Notes,
+    VerificationRating,
+    Verifier
+  }) {
+    reqBod = req.body;
+  
+  
+  const observationData = {
+    UserID: { S: '0' },
+    ObservationID: { S: '0' },
+    PhotoFileLocation: { S: 'N/A' },
+    ObsDate: { S: new Date().toISOString() },
+    LocationData: {reqBod},
+    Notes: { S: 'DB TEST' },
+    VerificationRating: { N: '1' },
+    Verifier: { S: 'Its me' }
+  };
+  res.status(200)
+
+  insertObservation(observationData)
+}
+  
 
 module.exports = {
     create,
