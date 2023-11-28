@@ -1,7 +1,7 @@
-import { BatchWriteItemCommand, BatchWriteItemCommandInput, AttributeValue } from "@aws-sdk/client-dynamodb";
-import { Observation } from './interfaces';
-import { client } from "../index.js";
-import { insertObservation } from "../DB-files/DB-Operations/insertObservation.js";
+const { BatchWriteItemCommand, BatchWriteItemCommandInput, AttributeValue } = require("@aws-sdk/client-dynamodb");
+const { Observation } = require('./interfaces');
+const { client } = require("../index.js");
+const { insertObservation } = require("../DB-files/DB-Operations/insertObservation.js");
 
 //For HTP Handling (funcitons using http fetch data)
 
