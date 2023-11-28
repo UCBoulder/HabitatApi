@@ -1,2 +1,4 @@
+*.DS_STORE  
 /node_modules
 /.idea
+DB-files/DB-Operations/.DS_Store
