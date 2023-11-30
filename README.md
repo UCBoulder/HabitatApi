@@ -10,7 +10,7 @@
 # Using the API
 ### 1. Right now we have 2 get routes and 2 POST routes.
 ### 2. Right now you can both GET and POST to /observations.
-###     GETting from /observationswill display all obervations in DB
+###     GETing from /observations will display all obervations in DB
 ###     POSTing to /observations will add a generic observation to DB (overwriting the one that was there)
 ### 3. Accessible at '/locTest', there is a GET route used to test displaying points on the app's homescreen. It sends an array of {lattitude:x, longitude:y} coordinates.
 ### 4. To create a table you can send a blank POST to /maketable. (This should not be used after the table has been made once.)
