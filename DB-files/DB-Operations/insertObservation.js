@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -35,17 +35,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.insertObservation = void 0;
 var client_dynamodb_1 = require("@aws-sdk/client-dynamodb");
 var index_js_1 = require("../index.js");
-exports.insertObservation = function (Observation) { return __awaiter(void 0, void 0, void 0, function () {
-    var params, command, response, error_1;
+var insertObservation = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var newObservation, params, command, response, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                newObservation = {
+                    UserID: { S: 'someUserId' },
+                    ObservationID: { S: 'someCheatUploadID' },
+                    PhotoFileLocation: { S: 'someLocation' },
+                    Date: { S: new Date().toISOString() },
+                    LocationData: { S: 'someLocationInfo' },
+                    Notes: { S: 'someNotes' },
+                    VerificationRating: { N: '3' },
+                    Verifier: { S: 'someVerifier' },
+                };
                 params = {
                     TableName: "Observations",
-                    Item: Observation
+                    Item: newObservation,
                 };
                 _a.label = 1;
             case 1:
@@ -64,3 +75,4 @@ exports.insertObservation = function (Observation) { return __awaiter(void 0, vo
         }
     });
 }); };
+exports.insertObservation = insertObservation;
