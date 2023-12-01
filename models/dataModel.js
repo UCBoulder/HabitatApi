@@ -1,20 +1,21 @@
 const dataModel = {
-    position: {
-        timestamp: Number,
-        mocked: Boolean,
-        provider: String,
+    Observation: {
+        UserID: String,    //from hardware-ID     
+        timestamp: Number, //from mapsAPI
+        Notes: String,     //from submit page
+        VerificationRating: Number, //from submit page
+        Verifier: String,  //implemented later
         coords: {
-        speed: Number,
-        heading: Number,
-        altitude: Number,
-        accuracy: Number,
-        longitude: Number,
-        altitudeAccuracy: Number,
-        latitude: Number
+        altitude: Number, //from mapsAPI
+        accuracy: Number, //from mapsAPI
+        longitude: Number,//from mapsAPI
+        altitudeAccuracy: Number, //from mapsAPI
+        latitude: Number  //from mapsAPI
         }
     },
 
     llTest: {
+        UserID: Number,
         latitude: Number,
         longitude: Number,
         verification: Number
