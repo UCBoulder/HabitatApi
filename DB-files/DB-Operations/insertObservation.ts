@@ -4,13 +4,13 @@ import { client } from '../index.js';
 
 export const insertObservation = async () => {
   const newObservation: Observation = {
-    UserID: { S: 'someUserId' },
+    UserID: { S: new Date().toISOString() },
     ObservationID: { S: 'someCheatUploadID' },
     PhotoFileLocation: { S: 'someLocation' },
     Date: { S: new Date().toISOString() },
     LocationData: { S: 'someLocationInfo' },
     Notes: { S: 'someNotes' },
-    VerificationRating: {N : '3' },
+    VerificationRating: {N : '0' },
     Verifier: { S: 'someVerifier' },
   };
   

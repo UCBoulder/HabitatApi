@@ -36,43 +36,59 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.insertObservation = void 0;
+exports.deleteItemsWithZeroVerificationRating = void 0;
+//function for deleting all entries that have a verificationRating of 0, if the entry has been verified as not cheatgrass
 var client_dynamodb_1 = require("@aws-sdk/client-dynamodb");
-var index_js_1 = require("../index.js");
-var insertObservation = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var newObservation, params, command, response, error_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+var lib_dynamodb_1 = require("@aws-sdk/lib-dynamodb");
+var client = new client_dynamodb_1.DynamoDBClient({});
+var docClient = lib_dynamodb_1.DynamoDBDocumentClient.from(client);
+var deleteItemsWithZeroVerificationRating = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var tableName, scanCommand, scanResponse, itemsToDelete, _i, _a, item, deleteCommand, error_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                newObservation = {
-                    UserID: { S: new Date().toISOString() },
-                    ObservationID: { S: 'someCheatUploadID' },
-                    PhotoFileLocation: { S: 'someLocation' },
-                    Date: { S: new Date().toISOString() },
-                    LocationData: { S: 'someLocationInfo' },
-                    Notes: { S: 'someNotes' },
-                    VerificationRating: { N: '0' },
-                    Verifier: { S: 'someVerifier' },
-                };
-                params = {
-                    TableName: "Observations",
-                    Item: newObservation,
-                };
-                _a.label = 1;
+                tableName = "Observations";
+                scanCommand = new lib_dynamodb_1.ScanCommand({
+                    TableName: tableName,
+                    FilterExpression: 'verificationRating = :rating',
+                    ExpressionAttributeValues: {
+                        ':rating': 0,
+                    },
+                });
+                _b.label = 1;
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                command = new client_dynamodb_1.PutItemCommand(params);
-                return [4 /*yield*/, index_js_1.client.send(command)];
+                _b.trys.push([1, 7, , 8]);
+                return [4 /*yield*/, docClient.send(scanCommand)];
             case 2:
-                response = _a.sent();
-                console.log("Observation inserted successfully:", response);
-                return [2 /*return*/, response];
+                scanResponse = _b.sent();
+                itemsToDelete = scanResponse.Items;
+                _i = 0, _a = itemsToDelete || [];
+                _b.label = 3;
             case 3:
-                error_1 = _a.sent();
-                console.error("Error inserting cheat upload:", error_1);
+                if (!(_i < _a.length)) return [3 /*break*/, 6];
+                item = _a[_i];
+                deleteCommand = new lib_dynamodb_1.DeleteCommand({
+                    TableName: tableName,
+                    Key: {
+                        ObservationID: item.ObservationID,
+                    },
+                });
+                return [4 /*yield*/, docClient.send(deleteCommand)];
+            case 4:
+                _b.sent();
+                _b.label = 5;
+            case 5:
+                _i++;
+                return [3 /*break*/, 3];
+            case 6:
+                console.log('Items deleted successfully:', itemsToDelete);
+                return [2 /*return*/, itemsToDelete];
+            case 7:
+                error_1 = _b.sent();
+                console.error('Error deleting items:', error_1);
                 throw error_1;
-            case 4: return [2 /*return*/];
+            case 8: return [2 /*return*/];
         }
     });
 }); };
-exports.insertObservation = insertObservation;
+exports.deleteItemsWithZeroVerificationRating = deleteItemsWithZeroVerificationRating;
