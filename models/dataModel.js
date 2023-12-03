@@ -1,17 +1,17 @@
 const dataModel = {
     Observation: {
-        UserID: String,    //from hardware-ID     
-        timestamp: Number, //from mapsAPI
+        //UserID: String,    //Don't have this yet   
         Notes: String,     //from submit page
         VerificationRating: Number, //from submit page
-        Verifier: String,  //implemented later
+        //Verifier: String,  //Don't have this yet
         coords: {
-        altitude: Number, //from mapsAPI
+        //altitude: Number, //Not gonna use this
         accuracy: Number, //from mapsAPI
         longitude: Number,//from mapsAPI
-        altitudeAccuracy: Number, //from mapsAPI
+        //altitudeAccuracy: Number, //Not gonna use this
         latitude: Number  //from mapsAPI
-        }
+        },
+        timestamp: Number, //from mapsAPI
     },
 
     // Ethan's object
