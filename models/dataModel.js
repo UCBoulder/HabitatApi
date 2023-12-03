@@ -1,6 +1,6 @@
 const dataModel = {
     Observation: {
-    //  UserID: String,    //Not using this yet - defualt to 0
+        UserID: String,    //Not using this yet - defualt to 0
         timestamp: Number, //from mapsAPI
         Notes: String,     //from submit page
         VerificationRating: Number, //from submit - default to 1
