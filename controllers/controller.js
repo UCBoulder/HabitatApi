@@ -1,8 +1,9 @@
-const { BatchWriteItemCommand, BatchWriteItemCommandInput, AttributeValue } = require("@aws-sdk/client-dynamodb");
+const { BatchWriteItemCommand, BatchWriteItemCommandInput, AttributeValue, ScanCommand } = require("@aws-sdk/client-dynamodb");
 const { client } = require("../DB-files/DB-Operations/index.js");
 const { insertObservation } = require("../DB-files/DB-Operations/insertObservation.js");
 const { viewAllObservations } = require("../DB-files/DB-Operations/viewAllObservations.js");
 const { createTable } = require("../DB-files/DB-Operations/createTable.js");
+const { deleteOneObs } = require("../DB-files/DB-Operations/deleteOneObservation.js");
 
 //For HTP Handling (funcitons using http fetch data)
 
@@ -20,6 +21,34 @@ function sendAll(req,res){
     const points = viewAllObservations();
     res.json(points.body);
 
+}
+
+function deleteZeroVerificationRating(req,res){
+  try{
+    const tableName = "Observations";
+
+    const scanCommand = new ScanCommand({TableName: tableName});
+
+    client.send(scanCommand)
+      .then((scanResponse) => {
+        const deletePromises = scanResponse.Items
+          .filter(entry => entry.VerificationRating === 0)
+          .map(entry => deleteOneObs(entry.ObservationID));
+
+        return deletePromises.reduce((prevPromise, deletePromise) =>
+          prevPromise.then(() => deletePromise), Promise.resolve());
+    
+      })
+      .then(() => {
+        res.status(200).json({message: "All entries with verification rating of 0 deleted"})
+      })
+      .catch((error) => {
+        res.status(500).json({error: "Error deleting entries"})
+      });
+  }
+  catch(error){
+    res.status(500).json({error: "Error deleting entries"})
+  }
 }
 
 function arrayTest(req,res){
@@ -74,5 +103,6 @@ module.exports = {
     sendAll,
     arrayTest,
     addObs,
-    setupTable
+    setupTable,
+    deleteZeroVerificationRating
 };

@@ -1,11 +1,10 @@
-//function for if verifier decides to delete an entries manually using observation ID
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, DeleteCommand } from "@aws-sdk/lib-dynamodb";
+const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBDocumentClient, DeleteCommand } = require("@aws-sdk/lib-dynamodb");
 
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
-export const deleteOneObs = async (ObservationIDToDelete: string) => {
+exports.deleteOneObs = async (ObservationIDToDelete) => {
   const tableName = "Observations";
 
   const command = new DeleteCommand({
