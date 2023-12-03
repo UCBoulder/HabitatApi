@@ -2,6 +2,8 @@ import { PutItemCommand, PutItemCommandInput, AttributeValue } from "@aws-sdk/cl
 import { Observation } from './interfaces';
 import { client } from '../index.js';
 
+//When called, this (insertobservation) should tahe the body fron ethan's request as a parameter, and within the function
+//, pick what we need from it, and fomm the observation (including adding post id, and other fields) and add it to the DB
 export const insertObservation = async (Observation: Observation) => {
   
 
