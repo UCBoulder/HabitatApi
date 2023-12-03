@@ -1,3 +1,9 @@
+const { BatchWriteItemCommand, BatchWriteItemCommandInput, AttributeValue } = require("@aws-sdk/client-dynamodb");
+const { client } = require("../DB-files/DB-Operations/index.js");
+const { insertObservation } = require("../DB-files/DB-Operations/insertObservation.js");
+const { viewAllObservations } = require("../DB-files/DB-Operations/viewAllObservations.js");
+const { createTable } = require("../DB-files/DB-Operations/createTable.js");
+
 //For HTP Handling (funcitons using http fetch data)
 
 const ObservationRepository = require('../repositories/observationRepository');
@@ -11,12 +17,13 @@ function create(req,res){
 function sendAll(req,res){
     //This is to grab all coordinates from the database, and send them back to the front end
     //This is to grab all coordinates from the database, and send them back to the front end
-    const points = {"NOT YET": "IMPLEMENTED"};
-    res.json(points);
+    const points = viewAllObservations();
+    res.json(points.body);
 
 }
 
 function arrayTest(req,res){
+  console.log("API HIT")
     //Generate random array of points in Gunnison, and send to the front end.
     points = [
         //yes = 2 no = 0 maybe =1
@@ -33,12 +40,39 @@ function arrayTest(req,res){
         { latitude:38.53750984924373, longitude: -106.9257911397735, verification: 2}
     ];
     res.json(points)
-
-    
 }
+
+function addObs(req, res, {
+    UserID,
+    ObservationID,
+    PhotoFileLocation,
+    ObsDate,
+    LocationData,
+    Notes,
+    VerificationRating,
+    Verifier
+  }) {
+    // reqBod = req.body;
+  
+  
+  const observationData = {
+    LocationData: {}
+  }
+
+  insertObservation()
+  res.status(200)
+}
+
+function setupTable(req, res){
+  createTable()
+  res.status(200)
+}
+  
 
 module.exports = {
     create,
     sendAll,
     arrayTest,
+    addObs,
+    setupTable
 };

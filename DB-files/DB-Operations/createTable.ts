@@ -32,28 +32,6 @@ export const createTable = async () => {
       ReadCapacityUnits: 5,
       WriteCapacityUnits: 5,
     },
-    GlobalSecondaryIndexes: [
-      {
-        IndexName: "VerificationIndex",
-        KeySchema: [
-          {
-            AttributeName: "VerificationRating",
-            KeyType: "HASH", // Partition Key
-          },
-          {
-            AttributeName: "UserID",
-            KeyType: "RANGE", // Sort Key
-          },
-        ],
-        Projection: {
-          ProjectionType: "ALL",
-        },
-        ProvisionedThroughput: {
-          ReadCapacityUnits: 5,
-          WriteCapacityUnits: 5,
-        },
-      },
-    ],
   });
 
   try {

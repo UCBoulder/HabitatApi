@@ -2,10 +2,22 @@ import { PutItemCommand, PutItemCommandInput, AttributeValue } from "@aws-sdk/cl
 import { Observation } from './interfaces';
 import { client } from '../index.js';
 
-export const insertObservation = async (Observation: Observation) => {
+export const insertObservation = async () => {
+  const newObservation: Observation = {
+    UserID: { S: 'someUserId' },
+    ObservationID: { S: 'someCheatUploadID' },
+    PhotoFileLocation: { S: 'someLocation' },
+    Date: { S: new Date().toISOString() },
+    LocationData: { S: 'someLocationInfo' },
+    Notes: { S: 'someNotes' },
+    VerificationRating: {N : '3' },
+    Verifier: { S: 'someVerifier' },
+  };
+  
+
   const params: PutItemCommandInput = {
     TableName: "Observations",
-    Item: Observation as unknown as Record<string, AttributeValue>,
+    Item: newObservation as unknown as Record<string, AttributeValue>,
   };
 
   try {
