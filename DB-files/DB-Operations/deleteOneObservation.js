@@ -9,23 +9,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.insertObservation = void 0;
+exports.main = void 0;
+//function for if verifier decides to delete an entries manually using observation ID
 const client_dynamodb_1 = require("@aws-sdk/client-dynamodb");
-const index_js_1 = require("../index.js");
-const insertObservation = (Observation) => __awaiter(void 0, void 0, void 0, function* () {
-    const params = {
-        TableName: "Observations",
-        Item: Observation,
-    };
+const lib_dynamodb_1 = require("@aws-sdk/lib-dynamodb");
+const client = new client_dynamodb_1.DynamoDBClient({});
+const docClient = lib_dynamodb_1.DynamoDBDocumentClient.from(client);
+const main = (ObservationIDToDelete) => __awaiter(void 0, void 0, void 0, function* () {
+    const tableName = "Observations";
+    const command = new lib_dynamodb_1.DeleteCommand({
+        TableName: tableName,
+        Key: {
+            ObservationID: "observationIDToDelete",
+        },
+    });
     try {
-        const command = new client_dynamodb_1.PutItemCommand(params);
-        const response = yield index_js_1.client.send(command);
-        console.log("Observation inserted successfully:", response);
+        const response = yield docClient.send(command);
+        console.log("Item deleted successfully:", response);
         return response;
     }
     catch (error) {
-        console.error("Error inserting cheat upload:", error);
-        throw error;
+        console.error("Error deleting item:", error);
+        throw error; // Rethrow the error to indicate failure
     }
 });
-exports.insertObservation = insertObservation;
+exports.main = main;
