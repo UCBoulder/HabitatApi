@@ -12,7 +12,7 @@ export const insertObservation = async (Observation: Observation) => {
     // From here he may be able to just upload the whole json object, or we can parse it into arguments for the dynamo command.
 
   const observationDyanmoDB: Observation = {
-    UserID: uuidv4(),//can change this when we actually have users to pass in
+    UserID: "0",//can change this when we actually have users to pass in
     ObservationID: uuidv4(),
     Notes: Observation.Notes,
     VerificationRating: Observation.VerificationRating,

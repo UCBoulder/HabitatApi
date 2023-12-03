@@ -21,7 +21,7 @@ const insertObservation = (Observation) => __awaiter(void 0, void 0, void 0, fun
     // Using UUID (or other random method) add/set ObservationID in FE json or other variable.
     // From here he may be able to just upload the whole json object, or we can parse it into arguments for the dynamo command.
     const observationDyanmoDB = {
-        UserID: (0, uuid_1.v4)(), //can change this when we actually have users to pass in
+        UserID: "0", //can change this when we actually have users to pass in
         ObservationID: (0, uuid_1.v4)(),
         Notes: Observation.Notes,
         VerificationRating: Observation.VerificationRating,

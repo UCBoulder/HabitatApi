@@ -60,14 +60,12 @@ function addObs(req, res, {
     LocationData: {}
   }
 
-  //When called, this (insertobservation) should tahe the body fron ethan's request as a parameter, and within the function
-  //, pick what we need from it, and fomm the observation (including adding post id, and other fields) and add it to the DB
   insertObservation()
   res.status(200)
 }
 
 function setupTable(req, res){
-  createTable()
+  createTable(req.body)
   res.status(200)
 }
   
