@@ -1,15 +1,15 @@
 const dataModel = {
     Observation: {
-        UserID: String,    //from hardware-ID     
+    //  UserID: String,    //Not using this yet - defualt to 0
         timestamp: Number, //from mapsAPI
         Notes: String,     //from submit page
-        VerificationRating: Number, //from submit page
-        Verifier: String,  //implemented later
+        VerificationRating: Number, //from submit - default to 1
+    //  Verifier: String,  //implemented later
         coords: {
-        altitude: Number, //from mapsAPI
+    //  altitude: Number, //from mapsAPI - not using this
         accuracy: Number, //from mapsAPI
         longitude: Number,//from mapsAPI
-        altitudeAccuracy: Number, //from mapsAPI
+    //  altitudeAccuracy: Number, //from mapsAPI - not using this
         latitude: Number  //from mapsAPI
         }
     },
