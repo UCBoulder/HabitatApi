@@ -24,10 +24,6 @@ const createTable = () => __awaiter(void 0, void 0, void 0, function* () {
                 AttributeName: "ObservationID",
                 AttributeType: "S",
             },
-            {
-                AttributeName: "VerificationRating",
-                AttributeType: "N",
-            },
         ],
         KeySchema: [
             {

@@ -13,7 +13,13 @@ exports.insertObservation = void 0;
 const client_dynamodb_1 = require("@aws-sdk/client-dynamodb");
 const index_js_1 = require("../index.js");
 const uuid_1 = require("uuid");
+//When called, this (insertobservation) should tahe the body fron ethan's request as a parameter, and within the function
+//pick what we need from it, and form the observation (including adding Observation id, user ID and other fields) and add it to the DB
 const insertObservation = (Observation) => __awaiter(void 0, void 0, void 0, function* () {
+    // Change insertObservations function parameter to take in the front end's json
+    // Add/set UserID, default to 0 for now in Front End json or other variable.
+    // Using UUID (or other random method) add/set ObservationID in FE json or other variable.
+    // From here he may be able to just upload the whole json object, or we can parse it into arguments for the dynamo command.
     const observationDyanmoDB = {
         UserID: (0, uuid_1.v4)(), //can change this when we actually have users to pass in
         ObservationID: (0, uuid_1.v4)(),
