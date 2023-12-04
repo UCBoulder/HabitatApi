@@ -24,6 +24,7 @@ import { AttributeValue } from "@aws-sdk/client-dynamodb";
     Notes: string;
     VerificationRating: number;
     coords: string;
+    timestamp: string;
   }
   
   // observation {

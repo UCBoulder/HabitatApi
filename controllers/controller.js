@@ -53,6 +53,7 @@ function addObs(req, res, {
     Verifier
   }) {
     reqBod = req.body;
+    console.log("CONTROLLER SEES: ", reqBod);
 
   
   
@@ -60,7 +61,7 @@ function addObs(req, res, {
     LocationData: {}
   }
 
-  insertObservation()
+  insertObservation(reqBod)
   res.status(200)
 }
 
