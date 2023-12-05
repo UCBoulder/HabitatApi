@@ -15,7 +15,7 @@ const index_js_1 = require("../index.js");
 const uuid_1 = require("uuid");
 const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, function* () {
     const observationDynamoDB = {
-        "UserID": "00", // Change this when you have actual users to pass in
+        "UserID": "00",
         "ObservationID": (0, uuid_1.v4)(),
         "Notes": observation.Notes,
         "VerificationRating": observation.VerificationRating,
@@ -28,8 +28,8 @@ const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, fun
             UserID: { S: observationDynamoDB.UserID },
             ObservationID: { S: observationDynamoDB.ObservationID },
             Notes: { S: observationDynamoDB.Notes },
-            VerificationRating: { S: observationDynamoDB.VerificationRating.toString() },
-            coords: { S: observationDynamoDB.coords },
+            VerificationRating: { S: observationDynamoDB.VerificationRating },
+            coords: { S: JSON.stringify(observationDynamoDB.coords) },
             timestamp: { N: observationDynamoDB.timestamp },
         },
     };

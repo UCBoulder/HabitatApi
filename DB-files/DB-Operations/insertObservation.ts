@@ -19,8 +19,8 @@ export const insertObservation = async (observation: Observation) => {
       UserID: { S: observationDynamoDB.UserID },
       ObservationID: { S: observationDynamoDB.ObservationID },
       Notes: { S: observationDynamoDB.Notes },
-      VerificationRating: { S: observationDynamoDB.VerificationRating.toString()},
-      coords: { S: observationDynamoDB.coords },
+      VerificationRating: { S: observationDynamoDB.VerificationRating},
+      coords: { S: JSON.stringify(observationDynamoDB.coords) },
       timestamp: { N: observationDynamoDB.timestamp },
     },
   };
