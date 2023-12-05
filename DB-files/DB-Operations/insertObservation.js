@@ -22,12 +22,12 @@ const insertObservation = (Observation) => __awaiter(void 0, void 0, void 0, fun
     // From here he may be able to just upload the whole json object, or we can parse it into arguments for the dynamo command.
     console.log("InsertObs SEES: ", Observation);
     const observationDyanmoDB = {
-        UserID: "00", //can change this when we actually have users to pass in
-        ObservationID: (0, uuid_1.v4)(),
-        Notes: Observation.Notes,
-        VerificationRating: Observation.VerificationRating,
-        coords: JSON.stringify(Observation.coords),
-        timestamp: Observation.timestamp
+        "UserID": "00", //can change this when we actually have users to pass in
+        "ObservationID": (0, uuid_1.v4)(),
+        "Notes": Observation.Notes,
+        "VerificationRating": Observation.VerificationRating,
+        "coords": JSON.stringify(Observation.coords),
+        "timestamp": Observation.timestamp,
         //if you want to take the cords out then you just need to parse the JSON, this makes storing easy for now
     };
     console.log("FINAL OBS: ", observationDyanmoDB);
