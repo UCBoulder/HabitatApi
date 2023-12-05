@@ -28,9 +28,9 @@ const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, fun
             UserID: { S: observationDynamoDB.UserID },
             ObservationID: { S: observationDynamoDB.ObservationID },
             Notes: { S: observationDynamoDB.Notes },
-            VerificationRating: { N: observationDynamoDB.VerificationRating.toString() },
+            VerificationRating: { S: observationDynamoDB.VerificationRating.toString() },
             coords: { S: observationDynamoDB.coords },
-            timestamp: { N: observationDynamoDB.timestamp.toString() },
+            timestamp: { N: observationDynamoDB.timestamp },
         },
     };
     try {
