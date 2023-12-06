@@ -13,10 +13,6 @@ export const createTable = async () => {
         AttributeName: "ObservationID",
         AttributeType: "S",
       },
-      {
-        AttributeName: "VerificationRating",
-        AttributeType: "N",
-      },
     ],
     KeySchema: [
       {

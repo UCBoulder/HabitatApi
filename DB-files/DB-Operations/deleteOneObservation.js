@@ -9,28 +9,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getObservation = void 0;
+exports.main = void 0;
+//function for if verifier decides to delete an entries manually using observation ID
 const client_dynamodb_1 = require("@aws-sdk/client-dynamodb");
-const index_js_1 = require("../index.js");
-const getObservation = (userID, observationID) => __awaiter(void 0, void 0, void 0, function* () {
-    const params = {
-        TableName: "Observations",
+const lib_dynamodb_1 = require("@aws-sdk/lib-dynamodb");
+const client = new client_dynamodb_1.DynamoDBClient({});
+const docClient = lib_dynamodb_1.DynamoDBDocumentClient.from(client);
+const main = (ObservationIDToDelete) => __awaiter(void 0, void 0, void 0, function* () {
+    const tableName = "Observations";
+    const command = new lib_dynamodb_1.DeleteCommand({
+        TableName: tableName,
         Key: {
-            "userID": { S: userID },
-            "ObservationID": { S: observationID },
+            ObservationID: "observationIDToDelete",
         },
-    };
-    const command = new client_dynamodb_1.GetItemCommand(params);
+    });
     try {
-        const result = yield index_js_1.client.send(command);
-        if (result.Item) {
-            console.log("Item retrieved:", result.Item);
-            return result.Item;
-        }
+        const response = yield docClient.send(command);
+        console.log("Item deleted successfully:", response);
+        return response;
     }
     catch (error) {
-        console.error("Error getting the item:", error);
-        throw error;
+        console.error("Error deleting item:", error);
+        throw error; // Rethrow the error to indicate failure
     }
 });
-exports.getObservation = getObservation;
+exports.main = main;

@@ -52,19 +52,21 @@ function addObs(req, res, {
     VerificationRating,
     Verifier
   }) {
-    // reqBod = req.body;
+    reqBod = req.body;
+    console.log("CONTROLLER SEES: ", reqBod);
+
   
   
   const observationData = {
     LocationData: {}
   }
 
-  insertObservation()
+  insertObservation(reqBod)
   res.status(200)
 }
 
 function setupTable(req, res){
-  createTable()
+  createTable(req.body)
   res.status(200)
 }
   
