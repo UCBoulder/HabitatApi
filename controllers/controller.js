@@ -68,7 +68,13 @@ function addObs(req, res, {
 
 function setupTable(req, res){
   createTable(req.body)
-  res.status(200)
+      .then(()=>{
+        res.status(200).send('Table Created Successfully')
+      })
+      .catch(error => {
+        console.error('Error creating table: ', error);
+        res.status(500).send("Internal Server Error")
+      })
 }
   
 
