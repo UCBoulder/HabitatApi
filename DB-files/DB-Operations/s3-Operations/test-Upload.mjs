@@ -24,16 +24,13 @@ async function s3MultipartUpload(bucket, key, file) {
   }
 }
 
-async function processFile() {
+async function processFile(encodedFileString) {
   try {
-      const chunks = await splitFileToChunks("DB-files/DB-Operations/s3-Operations/test-Photo.jpeg");
+      const chunks = await splitFileToChunks(encodedFileString);
       const chunkBuffers = Buffer.concat(chunks);
       const location = await s3MultipartUpload("test-cow", "test-photos/test-Photo.jpeg", chunkBuffers);
-      // Use 'location' when inserting to DynamoDB
       console.log(location); // For testing
   } catch (err) {
       console.error(err);
   }
 }
-
-processFile();
