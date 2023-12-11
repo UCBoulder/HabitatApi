@@ -1,73 +1,35 @@
-import {listBucketsCommand, S3Client} from '@aws-sdk/client-s3';
-import fs from 'fs';
-import stream from 'stream';
-import util from 'util';
+import { splitFileToChunks } from './turn-file_multi.mjs';
+import { S3Client } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 
-const finished = util.promisify(stream.finished);
+const client = new S3Client({ region: "us-east-1" });
 
-const s3 = new AWS.S3();
-
-async function startUpload(file) {
-  const params = {
-    Bucket: 'bucket-name',
-    Key: file.name,
-  };
-
-  const multipartUpload = await s3.createMultipartUpload(params).promise();
-
-  console.log('Multipart upload started', multipartUpload.UploadId);
-
-  // Split the file into parts, upload each part, and keep track of the ETags and part numbers
-  const parts = [];
-  const partSize = 5 * 1024 * 1024; // Minimum part size is 5mb
-  let partNum = 0;
-
-  for (let start = 0; start < file.data.length; start += partSize) {
-    partNum++;
-    
-    const end = Math.min(start + partSize, file.data.length);
-    const partData = file.data.slice(start, end);
-
-    const uploadParams = {
-      Body: partData,
-      Bucket: params.Bucket,
-      Key: params.Key,
-      PartNumber: partNum,
-      UploadId: multipartUpload.UploadId,
-    };
-    
-    const uploadPart = await s3.uploadPart(uploadParams).promise();
-    parts.push({
-      ETag: uploadPart.ETag,
-      PartNumber: partNum,
-    });
-
-    console.log(`Uploaded part ${partNum}`);
-  }
-
-  await completeUpload(multipartUpload.UploadId, params.Key, params.Bucket, parts);
-}
-
-async function completeUpload(uploadId, fileName, bucketName, parts) {
-
-    const params = {
-      Bucket: bucketName,
-      Key: fileName,
-      MultipartUpload: {
-        Parts: parts,
-      },
-      UploadId: uploadId,
-    };
+async function s3MultipartUpload(bucket, key, file) {
+  const upload = new Upload({
+    client: client,
+    params: {
+        Bucket: bucket,
+        Key: key,
+        Body: file,
+    },
+  });
 
   try {
-    const data = await s3.completeMultipartUpload(params).promise();
-    console.log('Upload Complete', data.Location);
-  } catch (error) {
-    console.error("Error while completing upload", error);
+      await upload.done();
+      console.log(`File uploaded successfully to ${bucket}/${key}`);
+  } catch (e) {
+      console.error("Upload failed", e);
   }
 }
 
-// Usage example with a local file
-const file = fs.readFileSync("DB-files/DB-Operations/s3-Operations/test-Photo.jpeg");
+async function processFile() {
+  try {
+      const chunks = await splitFileToChunks("DB-files/DB-Operations/s3-Operations/test-Photo.jpeg");
+      const chunkBuffers = Buffer.concat(chunks);
+      await s3MultipartUpload("test-cow", "test-Photo.jpeg", chunkBuffers);
+  } catch (err) {
+      console.error(err);
+  }
+}
 
-startUpload({ name: "file.jpg", data: file });
+processFile();

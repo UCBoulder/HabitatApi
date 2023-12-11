@@ -54,7 +54,7 @@ export const insertItem = async () => {
 
 helloS3();
 main();
-insertItem();
+
 
   
   
