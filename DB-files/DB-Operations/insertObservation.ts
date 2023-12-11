@@ -2,7 +2,7 @@ import { PutItemCommand, PutItemCommandInput, AttributeValue } from "@aws-sdk/cl
 import { Observation } from './interfaces';
 import { client } from '../index.js';
 import { v4 as uuidv4 } from 'uuid';
-
+import {processFile} from '../DB-Operations/s3-Operations';
 export const insertObservation = async (observation: Observation) => {
   const observationDynamoDB: Observation = {
     "UserID": "00", // Change this when you have actual users to pass in
@@ -11,8 +11,9 @@ export const insertObservation = async (observation: Observation) => {
     "VerificationRating": observation.VerificationRating,
     "coords": observation.coords,
     "timestamp": observation.timestamp,
+    "observationIamge": processFile(observation.observationIamge);
   };
-
+  
   const params: PutItemCommandInput = {
     TableName: "Observations",
     Item: {
@@ -22,6 +23,7 @@ export const insertObservation = async (observation: Observation) => {
       VerificationRating: { S: observationDynamoDB.VerificationRating},
       coords: { S: JSON.stringify(observationDynamoDB.coords) },
       timestamp: { N: observationDynamoDB.timestamp },
+      observationIamgeURL : { S: observationDynamoDB.observationIamge }
     },
   };
 
