@@ -20,7 +20,7 @@ export function splitFileToChunks(fileLocation, chunkSize = 1024 * 1024 * 5) { /
 async function processFile() {
   try {
     const chunks = await splitFileToChunks("DB-files/DB-Operations/s3-Operations/test-Photo.jpeg");
-    console.log(chunks); // here chunks is an array of Buffer, each Buffer represents a part of the file
+    // console.log(chunks); // here chunks is an array of Buffer, each Buffer represents a part of the file
   } catch (err) {
     console.error(err);
   }

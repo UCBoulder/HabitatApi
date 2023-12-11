@@ -1,8 +1,8 @@
 import { splitFileToChunks } from './turn-file_multi.mjs';
 import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
-
-const client = new S3Client({ region: "us-east-1" });
+const region = "us-east-1";
+const client = new S3Client({ region});
 
 async function s3MultipartUpload(bucket, key, file) {
   const upload = new Upload({
@@ -17,8 +17,10 @@ async function s3MultipartUpload(bucket, key, file) {
   try {
       await upload.done();
       console.log(`File uploaded successfully to ${bucket}/${key}`);
+      return `https://${bucket}.s3.${region}.amazonaws.com/${key}`; // return the location of the file
   } catch (e) {
       console.error("Upload failed", e);
+      return null;
   }
 }
 
@@ -26,7 +28,9 @@ async function processFile() {
   try {
       const chunks = await splitFileToChunks("DB-files/DB-Operations/s3-Operations/test-Photo.jpeg");
       const chunkBuffers = Buffer.concat(chunks);
-      await s3MultipartUpload("test-cow", "test-Photo.jpeg", chunkBuffers);
+      const location = await s3MultipartUpload("test-cow", "test-photos/test-Photo.jpeg", chunkBuffers);
+      // Use 'location' when inserting to DynamoDB
+      console.log(location); // For testing
   } catch (err) {
       console.error(err);
   }
