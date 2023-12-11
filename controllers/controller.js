@@ -9,11 +9,6 @@ const { createTable } = require("../DB-files/DB-Operations/createTable.js");
 const ObservationRepository = require('../repositories/observationRepository');
 const model = require('../models/dataModel');
 
-function create(req,res){
-    //This is just to parse the coordinates and send them to the database.
-    const body = req.body;
-}
-
 function sendAll(req,res){
     //This is to grab all coordinates from the database, and send them back to the front end
     //This is to grab all coordinates from the database, and send them back to the front end
@@ -62,7 +57,13 @@ function addObs(req, res, {
   }
 
   insertObservation(reqBod)
-  res.status(200)
+      .then(() => {
+        res.status(200).send('Observation added successfully');
+      })
+      .catch(error => {
+        console.error('Error adding observation:', error);
+        res.status(500).send('Internal Server Error');
+      });
 }
 
 function setupTable(req, res){
@@ -72,7 +73,6 @@ function setupTable(req, res){
   
 
 module.exports = {
-    create,
     sendAll,
     arrayTest,
     addObs,
