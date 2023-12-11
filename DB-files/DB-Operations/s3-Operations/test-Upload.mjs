@@ -36,3 +36,8 @@ export async function processFile(encodedFileString) {
       return null;
   }
 }
+
+export{
+  processFile,
+  
+}
