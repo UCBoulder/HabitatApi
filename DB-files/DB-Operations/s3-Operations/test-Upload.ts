@@ -1,10 +1,10 @@
-import { splitFileToChunks } from './turn-file_multi.mjs';
+import { splitFileToChunks } from "./turn-file_multi";
 import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 const region = "us-east-1";
 const client = new S3Client({ region});
 
-async function s3MultipartUpload(bucket, key, file) {
+async function s3MultipartUpload(bucket: string, key: string, file: Buffer) {
   const upload = new Upload({
     client: client,
     params: {
@@ -20,11 +20,11 @@ async function s3MultipartUpload(bucket, key, file) {
       return `https://${bucket}.s3.${region}.amazonaws.com/${key}`; // return the location of the file
   } catch (e) {
       console.error("Upload failed", e);
-      return null;
+      return undefined;
   }
 }
 
-export async function processFile(encodedFileString) {
+export async function processFile(encodedFileString: string) {
   try {
       const chunks = await splitFileToChunks(encodedFileString);
       const chunkBuffers = Buffer.concat(chunks);
@@ -33,11 +33,7 @@ export async function processFile(encodedFileString) {
       return location;
   } catch (err) {
       console.error(err);
-      return null;
+      return undefined;
   }
 }
 
-export{
-  processFile,
-  
-}

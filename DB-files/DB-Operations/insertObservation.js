@@ -13,7 +13,12 @@ exports.insertObservation = void 0;
 const client_dynamodb_1 = require("@aws-sdk/client-dynamodb");
 const index_js_1 = require("../index.js");
 const uuid_1 = require("uuid");
+const test_Upload_1 = require("../../DB-files/DB-Operations/s3-Operations/test-Upload");
 const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, function* () {
+    const imageLocation = yield (0, test_Upload_1.processFile)(observation.image);
+    if (!imageLocation) {
+        throw new Error("Failed to process image.");
+    }
     const observationDynamoDB = {
         "UserID": "00", // Change this when you have actual users to pass in
         "ObservationID": (0, uuid_1.v4)(),
@@ -21,6 +26,7 @@ const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, fun
         "VerificationRating": observation.VerificationRating,
         "coords": observation.coords,
         "timestamp": observation.timestamp,
+        "image": imageLocation
     };
     const params = {
         TableName: "Observations",
@@ -31,6 +37,7 @@ const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, fun
             VerificationRating: { S: observationDynamoDB.VerificationRating },
             coords: { S: JSON.stringify(observationDynamoDB.coords) },
             timestamp: { N: observationDynamoDB.timestamp },
+            observationIamgeURL: { S: observationDynamoDB.image }
         },
     };
     try {

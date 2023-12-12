@@ -2,9 +2,15 @@ import { PutItemCommand, PutItemCommandInput, AttributeValue } from "@aws-sdk/cl
 import { Observation } from './interfaces';
 import { client } from '../index.js';
 import { v4 as uuidv4 } from 'uuid';
-const { processFile } = require( './s3-Operations/test-Upload.mjs');
+import { processFile } from '../../DB-files/DB-Operations/s3-Operations/test-Upload';
+
 
 export const insertObservation = async (observation: Observation) => {
+  const imageLocation = await processFile(observation.image);
+
+  if (!imageLocation) {
+    throw new Error("Failed to process image.");
+  }
   const observationDynamoDB: Observation = {
     "UserID": "00", // Change this when you have actual users to pass in
     "ObservationID": uuidv4(),
@@ -12,7 +18,7 @@ export const insertObservation = async (observation: Observation) => {
     "VerificationRating": observation.VerificationRating,
     "coords": observation.coords,
     "timestamp": observation.timestamp,
-    "image": processFile(observation.image)
+    "image": imageLocation
   };
   
   const params: PutItemCommandInput = {
