@@ -7,6 +7,7 @@ import { processFile } from '../../DB-files/DB-Operations/s3-Operations/test-Upl
 
 export const insertObservation = async (observation: Observation) => {
   const imageLocation = await processFile(observation.image);
+  console.log(observation.image)
 
   if (!imageLocation) {
     throw new Error("Failed to process image.");

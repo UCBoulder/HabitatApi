@@ -16,6 +16,7 @@ const uuid_1 = require("uuid");
 const test_Upload_1 = require("../../DB-files/DB-Operations/s3-Operations/test-Upload");
 const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, function* () {
     const imageLocation = yield (0, test_Upload_1.processFile)(observation.image);
+    console.log(observation.image);
     if (!imageLocation) {
         throw new Error("Failed to process image.");
     }

@@ -13,6 +13,7 @@ exports.processFile = void 0;
 const turn_file_multi_1 = require("./turn-file_multi");
 const client_s3_1 = require("@aws-sdk/client-s3");
 const lib_storage_1 = require("@aws-sdk/lib-storage");
+const uuid_1 = require("uuid");
 const region = "us-east-1";
 const client = new client_s3_1.S3Client({ region });
 function s3MultipartUpload(bucket, key, file) {
@@ -36,12 +37,13 @@ function s3MultipartUpload(bucket, key, file) {
         }
     });
 }
+const id = (0, uuid_1.v4)();
 function processFile(encodedFileString) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const chunks = yield (0, turn_file_multi_1.splitFileToChunks)(encodedFileString);
             const chunkBuffers = Buffer.concat(chunks);
-            const location = yield s3MultipartUpload("test-cow", "test-photos/test-Photo.jpeg", chunkBuffers);
+            const location = yield s3MultipartUpload("test-cow", "test-photos/" + id, chunkBuffers);
             console.log(location); // For testing
             return location;
         }
