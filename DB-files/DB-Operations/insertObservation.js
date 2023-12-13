@@ -23,7 +23,8 @@ const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, fun
     const observationDynamoDB = {
         "UserID": "00", // Change this when you have actual users to pass in
         "ObservationID": (0, uuid_1.v4)(),
-        "Notes": observation.Notes,
+        "plantDescription": observation.plantDescription,
+        "locationDescription": observation.locationDescription,
         "VerificationRating": observation.VerificationRating,
         "coords": observation.coords,
         "timestamp": observation.timestamp,
@@ -34,8 +35,9 @@ const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, fun
         Item: {
             UserID: { S: observationDynamoDB.UserID },
             ObservationID: { S: observationDynamoDB.ObservationID },
-            Notes: { S: observationDynamoDB.Notes },
+            plantDescription: { S: observationDynamoDB.plantDescription },
             VerificationRating: { S: observationDynamoDB.VerificationRating },
+            locationDescription: { S: observationDynamoDB.locationDescription },
             coords: { S: JSON.stringify(observationDynamoDB.coords) },
             timestamp: { N: observationDynamoDB.timestamp },
             observationIamgeURL: { S: observationDynamoDB.image }

@@ -15,7 +15,8 @@ export const insertObservation = async (observation: Observation) => {
   const observationDynamoDB: Observation = {
     "UserID": "00", // Change this when you have actual users to pass in
     "ObservationID": uuidv4(),
-    "Notes": observation.Notes,
+    "plantDescription": observation.plantDescription,
+    "locationDescription": observation.locationDescription,
     "VerificationRating": observation.VerificationRating,
     "coords": observation.coords,
     "timestamp": observation.timestamp,
@@ -27,8 +28,9 @@ export const insertObservation = async (observation: Observation) => {
     Item: {
       UserID: { S: observationDynamoDB.UserID },
       ObservationID: { S: observationDynamoDB.ObservationID },
-      Notes: { S: observationDynamoDB.Notes },
+      plantDescription: { S: observationDynamoDB.plantDescription },
       VerificationRating: { S: observationDynamoDB.VerificationRating},
+      locationDescription: { S: observationDynamoDB.locationDescription},
       coords: { S: JSON.stringify(observationDynamoDB.coords) },
       timestamp: { N: observationDynamoDB.timestamp },
       observationIamgeURL : { S: observationDynamoDB.image }

@@ -20,8 +20,9 @@ import { AttributeValue } from "@aws-sdk/client-dynamodb";
   export interface Observation {
     // position: Position;
     UserID: string;
-    ObservationID: string; 
-    Notes: string;
+    ObservationID: string;
+    locationDescription:string;
+    plantDescription: string;
     VerificationRating: string;
     coords: string;
     timestamp: string;
