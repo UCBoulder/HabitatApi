@@ -20,3 +20,4 @@ __exportStar(require("./insertObservation"), exports);
 __exportStar(require("./viewAllObservations"), exports);
 __exportStar(require("./batchUpload"), exports);
 __exportStar(require("./interfaces"), exports);
+__exportStar(require("./s3-Operations/test-Upload.js"), exports);
