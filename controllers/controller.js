@@ -76,11 +76,16 @@ function setupTable(req, res){
         res.status(500).send("Internal Server Error")
       })
 }
+
+function getpinInfo(req,res){
+  //This will take in info from a selected pin, and send back lat, long, notes, and potential image.
+}
   
 
 module.exports = {
     sendAll,
     arrayTest,
     addObs,
-    setupTable
+    setupTable,
+    getpinInfo
 };
