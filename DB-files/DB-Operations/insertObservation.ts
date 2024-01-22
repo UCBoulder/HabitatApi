@@ -12,7 +12,7 @@ export const insertObservation = async (observation: Observation) => {
     throw new Error("Failed to process image.");
   }
   const observationDynamoDB: Observation = {
-    "UserID": "00", // Change this when you have actual users to pass in
+    "UserID": observation.UserID, // Change this when you have actual users to pass in
     "ObservationID": uuidv4(),
     "Notes": observation.Notes,
     "VerificationRating": observation.VerificationRating,
