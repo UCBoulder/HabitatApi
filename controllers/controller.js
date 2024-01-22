@@ -3,7 +3,7 @@ const { client } = require("../DB-files/DB-Operations/index.js");
 const { insertObservation } = require("../DB-files/DB-Operations/insertObservation.js");
 const { viewAllObservations } = require("../DB-files/DB-Operations/viewAllObservations.js");
 const { createTable } = require("../DB-files/DB-Operations/createTable.js");
-
+const { getObservation } = require("../DB-files/DB-Operations/getObservation.js");
 //For HTP Handling (funcitons using http fetch data)
 
 const ObservationRepository = require('../repositories/observationRepository');
@@ -76,7 +76,18 @@ function setupTable(req, res){
         res.status(500).send("Internal Server Error")
       })
 }
-  
+
+
+//get information from the database
+function returnObservation(req, res){
+  ObservationRepository.getObservation(req.params.id)
+  .then((observation) => {
+    res.json(observation);
+  })
+  .catch((err) => {
+    res.status(500).json({ error: err });
+  });
+}
 
 module.exports = {
     sendAll,

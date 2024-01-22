@@ -38,3 +38,15 @@ import { AttributeValue } from "@aws-sdk/client-dynamodb";
     // },
     //   "timestamp": 1701473299603
     // }
+
+
+    export interface ReturnObservation {
+      UserId: string;//need to make sure we want to return associated user ID
+      ObservationID: string;
+      Notes: string;
+      VerificationRating: string;
+      coords: string;
+      timestamp: string;
+      observationImageUrl : string;
+    }
+    

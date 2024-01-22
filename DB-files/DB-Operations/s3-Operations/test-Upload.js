@@ -28,7 +28,9 @@ function s3MultipartUpload(bucket, key, file) {
         try {
             yield upload.done();
             console.log(`File uploaded successfully to ${bucket}/${key}`);
-            return `https://${bucket}.s3.${region}.amazonaws.com/${key}`; // return the location of the file
+            // return `https://${bucket}.s3.${region}.amazonaws.com/${key}`; // return the location of the file
+            //updated to only return the location of the photo. this way can use a more secured signed ULR to get the photo
+            return key;
         }
         catch (e) {
             console.error("Upload failed", e);

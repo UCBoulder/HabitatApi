@@ -20,7 +20,7 @@ const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, fun
         throw new Error("Failed to process image.");
     }
     const observationDynamoDB = {
-        "UserID": "00", // Change this when you have actual users to pass in
+        "UserID": observation.UserID, // Change this when you have actual users to pass in
         "ObservationID": (0, uuid_1.v4)(),
         "Notes": observation.Notes,
         "VerificationRating": observation.VerificationRating,
@@ -37,7 +37,7 @@ const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, fun
             VerificationRating: { S: observationDynamoDB.VerificationRating },
             coords: { S: JSON.stringify(observationDynamoDB.coords) },
             timestamp: { N: observationDynamoDB.timestamp },
-            observationIamgeURL: { S: observationDynamoDB.image }
+            observationImageURL: { S: observationDynamoDB.image }
         },
     };
     try {

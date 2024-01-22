@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getObservation = void 0;
 const client_dynamodb_1 = require("@aws-sdk/client-dynamodb");
 const index_js_1 = require("../index.js");
+const s3getObject_1 = require("../../DB-files/DB-Operations/s3-Operations/s3getObject");
 const getObservation = (userID, observationID) => __awaiter(void 0, void 0, void 0, function* () {
     const params = {
         TableName: "Observations",
@@ -25,7 +26,17 @@ const getObservation = (userID, observationID) => __awaiter(void 0, void 0, void
         const result = yield index_js_1.client.send(command);
         if (result.Item) {
             console.log("Item retrieved:", result.Item);
-            return result.Item;
+            //formatting for the image URL
+            const formattedResult = {
+                "UserId": result.Item.UserID.S || " ",
+                "ObservationID": result.Item.ObservationID.S || " ",
+                "Notes": result.Item.Notes.S || " ",
+                "VerificationRating": result.Item.VerificationRating.S || " ",
+                "coords": JSON.parse(result.Item.coords.S || " "),
+                "timestamp": result.Item.timestamp.S || " ",
+                "observationImageUrl": (yield (0, s3getObject_1.s3GetPhoto_SignedURL)(result.Item.observationImageURL.S || " ")) || " "
+            };
+            return formattedResult;
         }
     }
     catch (error) {

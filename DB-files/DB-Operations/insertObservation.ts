@@ -30,7 +30,7 @@ export const insertObservation = async (observation: Observation) => {
       VerificationRating: { S: observationDynamoDB.VerificationRating},
       coords: { S: JSON.stringify(observationDynamoDB.coords) },
       timestamp: { N: observationDynamoDB.timestamp },
-      observationIamgeURL : { S: observationDynamoDB.image }
+      observationImageURL : { S: observationDynamoDB.image }
     },
   };
 
