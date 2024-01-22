@@ -93,5 +93,6 @@ module.exports = {
     sendAll,
     arrayTest,
     addObs,
-    setupTable
+    setupTable,
+    returnObservation
 };

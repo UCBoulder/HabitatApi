@@ -28,8 +28,8 @@ export const getObservation = async (userID: string, observationID: string) => {
                 "observationImageUrl": await s3GetPhoto_SignedURL(result.Item.observationImageURL.S||" ")||" "
             }
             return formattedResult;
-
         }
+        return null;
     } catch (error) {
         console.error("Error getting the item:", error);
         throw error;

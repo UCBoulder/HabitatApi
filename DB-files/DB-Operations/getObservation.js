@@ -38,6 +38,7 @@ const getObservation = (userID, observationID) => __awaiter(void 0, void 0, void
             };
             return formattedResult;
         }
+        return null;
     }
     catch (error) {
         console.error("Error getting the item:", error);
