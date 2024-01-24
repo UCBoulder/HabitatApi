@@ -9,25 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.processFile = void 0;
-const turn_file_multi_1 = require("./turn-file_multi");
+exports.customUpload = void 0;
 const client_s3_1 = require("@aws-sdk/client-s3");
+const lib_storage_1 = require("@aws-sdk/lib-storage");
 const region = "us-east-1";
 const client = new client_s3_1.S3Client({ region });
-const s3Upload_1 = require("./s3Upload");
-function processFile(encodedFileString) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const chunks = yield (0, turn_file_multi_1.splitFileToChunks)(encodedFileString);
-            const chunkBuffers = Buffer.concat(chunks);
-            const location = yield (0, s3Upload_1.s3MultipartUpload)("test-cow", "test-photos/test-Photo.jpeg", chunkBuffers);
-            console.log(location); // For testing
-            return location;
-        }
-        catch (err) {
-            console.error(err);
-            return undefined;
-        }
+const customUpload = (bucket, key, file) => __awaiter(void 0, void 0, void 0, function* () {
+    const upload = new lib_storage_1.Upload({
+        client: new client_s3_1.S3Client({ region: 'us-east-1' }),
+        params: { Bucket: bucket, Key: key, Body: file },
     });
-}
-exports.processFile = processFile;
+    return upload.done();
+});
+exports.customUpload = customUpload;

@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const DB_Operations_1 = require("../DB-files/DB-Operations");
 const uuid_1 = require("uuid");
 const client_dynamodb_1 = require("@aws-sdk/client-dynamodb");
+jest.mock("./s3test.MockUpload");
 jest.mock("@aws-sdk/client-dynamodb");
 describe("insertObservation", () => {
     it("should insert an observation into the database", () => __awaiter(void 0, void 0, void 0, function* () {
