@@ -22,17 +22,26 @@ function arrayTest(req,res){
     //Generate random array of points in Gunnison, and send to the front end.
     points = [
         //yes = 2 no = 0 maybe =1
-        { latitude:38.546445943803114, longitude: -106.9122634923445, verification: 0},
-        { latitude:38.53707082153294, longitude: -106.91163936226951, verification: 1},
-        { latitude:38.54040196118341, longitude: -106.94635060401474, verification: 0},
-        { latitude:38.58565979253917, longitude: -106.90209024913248, verification: 1},
-        { latitude:38.55237393048004, longitude: -106.9147836664154, verification: 1},
-        { latitude:38.55367458872616, longitude: -106.91846219020685, verification: 0},
-        { latitude:38.553548088520586, longitude: -106.91188122676483, verification: 2},
-        { latitude:38.558539891054025, longitude: -106.92633778462296, verification: 0},
-        { latitude:38.55765795191712, longitude: -106.92525179656708, verification: 2},
-        { latitude:38.53125989834007, longitude: -106.9244286599948, verification: 0},
-        { latitude:38.53750984924373, longitude: -106.9257911397735, verification: 2}
+        {
+          coords: {
+            latitude: 38.55855855855856,
+            longitude: -106.913873653868,
+            accuracy: 15.385000228881836
+          },
+          Notes: 'This is the notes section',
+          VerificationRating: 1,
+          timestamp: 1702323793519,
+        },
+        {
+          coords: {
+            latitude: 38.53707082153294,
+            longitude: -106.91163936226951,
+            accuracy: 9.431432543321121
+          },
+          Notes: 'This is the notes section',
+          VerificationRating: 2,
+          timestamp: 1702323793518,
+        },
     ];
     res.json(points)
 }
@@ -48,7 +57,7 @@ function addObs(req, res, {
     Verifier
   }) {
     reqBod = req.body;
-    console.log("CONTROLLER SEES: ", reqBod);
+    // console.log("CONTROLLER SEES: ", reqBod);
 
   
   

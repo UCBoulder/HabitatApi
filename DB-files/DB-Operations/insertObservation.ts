@@ -13,10 +13,10 @@ export const insertObservation = async (observation: Observation) => {
     throw new Error("Failed to process image.");
   }
   const observationDynamoDB: Observation = {
-    "UserID": "00", // Change this when you have actual users to pass in
+    "userID": observation.userID, // Change this when you have actual users to pass in
     "ObservationID": uuidv4(),
-    "plantDescription": observation.plantDescription,
-    "locationDescription": observation.locationDescription,
+    // "plantDescription": observation.plantDescription,
+    "Notes": observation.Notes,
     "VerificationRating": observation.VerificationRating,
     "coords": observation.coords,
     "timestamp": observation.timestamp,
@@ -26,18 +26,19 @@ export const insertObservation = async (observation: Observation) => {
   const params: PutItemCommandInput = {
     TableName: "Observations",
     Item: {
-      UserID: { S: observationDynamoDB.UserID },
+      UserID: { S: observationDynamoDB.userID },
       ObservationID: { S: observationDynamoDB.ObservationID },
-      plantDescription: { S: observationDynamoDB.plantDescription },
+      // plantDescription: { S: observationDynamoDB.plantDescription },
       VerificationRating: { S: observationDynamoDB.VerificationRating},
-      locationDescription: { S: observationDynamoDB.locationDescription},
+      locationDescription: { S: observationDynamoDB.Notes},
       coords: { S: JSON.stringify(observationDynamoDB.coords) },
       timestamp: { N: observationDynamoDB.timestamp },
-      observationIamgeURL : { S: observationDynamoDB.image }
+      observationIamgeUrl : { S: observationDynamoDB.image }
     },
   };
 
   try {
+    console.log(observationDynamoDB)
     const command = new PutItemCommand(params);
     const response = await client.send(command);
     console.log("Observation inserted successfully:", response);
