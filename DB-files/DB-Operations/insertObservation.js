@@ -16,15 +16,15 @@ const uuid_1 = require("uuid");
 const test_Upload_1 = require("../../DB-files/DB-Operations/s3-Operations/test-Upload");
 const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, function* () {
     const imageLocation = yield (0, test_Upload_1.processFile)(observation.image);
-    console.log(observation.image);
+    // console.log(observation.image)
     if (!imageLocation) {
         throw new Error("Failed to process image.");
     }
     const observationDynamoDB = {
-        "UserID": "00", // Change this when you have actual users to pass in
+        "userID": observation.userID, // Change this when you have actual users to pass in
         "ObservationID": (0, uuid_1.v4)(),
-        "plantDescription": observation.plantDescription,
-        "locationDescription": observation.locationDescription,
+        // "plantDescription": observation.plantDescription,
+        "Notes": observation.Notes,
         "VerificationRating": observation.VerificationRating,
         "coords": observation.coords,
         "timestamp": observation.timestamp,
@@ -33,17 +33,18 @@ const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, fun
     const params = {
         TableName: "Observations",
         Item: {
-            UserID: { S: observationDynamoDB.UserID },
+            UserID: { S: observationDynamoDB.userID },
             ObservationID: { S: observationDynamoDB.ObservationID },
-            plantDescription: { S: observationDynamoDB.plantDescription },
+            // plantDescription: { S: observationDynamoDB.plantDescription },
             VerificationRating: { S: observationDynamoDB.VerificationRating },
-            locationDescription: { S: observationDynamoDB.locationDescription },
+            locationDescription: { S: observationDynamoDB.Notes },
             coords: { S: JSON.stringify(observationDynamoDB.coords) },
             timestamp: { N: observationDynamoDB.timestamp },
-            observationIamgeURL: { S: observationDynamoDB.image }
+            observationIamgeUrl: { S: observationDynamoDB.image }
         },
     };
     try {
+        console.log(observationDynamoDB);
         const command = new client_dynamodb_1.PutItemCommand(params);
         const response = yield index_js_1.client.send(command);
         console.log("Observation inserted successfully:", response);

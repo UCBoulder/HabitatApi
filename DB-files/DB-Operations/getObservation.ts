@@ -6,7 +6,7 @@ export const getObservation = async (userID: string, observationID: string) => {
         TableName: "Observations",
         Key: {
             "userID": { S: userID }, 
-            "ObservationID": { S: observationID},
+            "ObservationID": { S: observationID },
         },
     };
     

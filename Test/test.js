@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const router = require('../routes/routes.js');
+const router = require('../routes/routes');
 
 const request = supertest(router);
 describe('Test the /maketable path', () => {
