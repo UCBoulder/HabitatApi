@@ -6,7 +6,6 @@ const { createTable } = require("../DB-files/DB-Operations/createTable.js");
 
 //For HTP Handling (funcitons using http fetch data)
 
-const ObservationRepository = require('../repositories/observationRepository');
 const model = require('../models/dataModel');
 
 function sendAll(req,res){
