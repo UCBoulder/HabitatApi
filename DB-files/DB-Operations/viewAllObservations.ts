@@ -11,7 +11,7 @@ export const viewAllObservations = async () => {
     
     try {
         const results = await client.send(command);
-        console.log("All items in the table: ", results.Items);
+        // console.log("All items in the table: ", results.Items);
         return results.Items;
     } catch (error) {
         console.error("Error Viewing results:", error);

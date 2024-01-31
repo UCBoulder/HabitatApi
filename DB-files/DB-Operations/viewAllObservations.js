@@ -19,7 +19,7 @@ const viewAllObservations = () => __awaiter(void 0, void 0, void 0, function* ()
     const command = new client_dynamodb_1.ScanCommand(scanInput);
     try {
         const results = yield index_js_1.client.send(command);
-        console.log("All items in the table: ", results.Items);
+        // console.log("All items in the table: ", results.Items);
         return results.Items;
     }
     catch (error) {
