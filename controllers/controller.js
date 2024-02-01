@@ -6,16 +6,20 @@ const { createTable } = require("../DB-files/DB-Operations/createTable.js");
 
 //For HTP Handling (funcitons using http fetch data)
 
-const ObservationRepository = require('../repositories/observationRepository');
 const model = require('../models/dataModel');
 
-function sendAll(req,res){
-    //This is to grab all coordinates from the database, and send them back to the front end
-    //This is to grab all coordinates from the database, and send them back to the front end
-    const points = viewAllObservations();
-    res.json(points.body);
-
+async function sendAll(req, res) {
+  try {
+    // This is to grab all coordinates from the database and send them back to the front end
+    const points = await viewAllObservations();
+    console.log(points)
+    res.status(200).send(points);
+  } catch (error) {
+    console.error('Error fetching and sending data:', error);
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
 }
+
 
 function arrayTest(req,res){
   console.log("API HIT")
