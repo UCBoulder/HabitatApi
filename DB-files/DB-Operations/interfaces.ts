@@ -21,12 +21,17 @@ import { AttributeValue } from "@aws-sdk/client-dynamodb";
     // position: Position;
     userID: string;
     ObservationID: string;
-    Notes:string;
     // plantDescription: string;
     VerificationRating: string;
     coords: string;
     timestamp: string;
     image : string;
+    Notes : {
+      estimatedCover : string,
+      estimatedArea: string,
+      locationDescription: string,
+      ownership: string
+    }
   }
   
   // observation {
