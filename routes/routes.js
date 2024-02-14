@@ -8,5 +8,4 @@ router.post('/observations', itemController.addObs);
 router.get('/observations', itemController.sendAll);
 router.get('/locTest', itemController.arrayTest);
 router.get('/observations', itemController.returnObservation);
-
 module.exports = router;
