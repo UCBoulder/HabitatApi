@@ -26,12 +26,7 @@ import { AttributeValue } from "@aws-sdk/client-dynamodb";
     coords: string;
     timestamp: string;
     image : string;
-    Notes : {
-      estimatedCover : string,
-      estimatedArea: string,
-      locationDescription: string,
-      ownership: string
-    }
+    Notes : string;
   }
   
   // observation {

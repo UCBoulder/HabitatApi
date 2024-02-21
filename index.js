@@ -1,8 +1,9 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
+app.use(bodyParser.json({ limit: '5mb' }));
 
 const itemRoutes = require('./routes/routes');
 app.use('/', itemRoutes); // Use '/items' as the base path

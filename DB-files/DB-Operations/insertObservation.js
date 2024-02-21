@@ -28,7 +28,11 @@ const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, fun
         "VerificationRating": observation.VerificationRating,
         "coords": observation.coords,
         "timestamp": observation.timestamp,
-        "image": imageLocation
+        "image": imageLocation,
+        /*"estimatedCover": observation.estimatedCover,
+        "estimatedArea": observation.estimatedArea,
+        "locationDescription": observation.locationDescription,
+        "ownership": observation.ownership*/
     };
     const params = {
         TableName: "Observations",
@@ -37,10 +41,14 @@ const insertObservation = (observation) => __awaiter(void 0, void 0, void 0, fun
             ObservationID: { S: observationDynamoDB.ObservationID },
             // plantDescription: { S: observationDynamoDB.plantDescription },
             VerificationRating: { S: observationDynamoDB.VerificationRating },
-            locationDescription: { S: observationDynamoDB.Notes },
             coords: { S: JSON.stringify(observationDynamoDB.coords) },
             timestamp: { N: observationDynamoDB.timestamp },
-            observationIamgeUrl: { S: observationDynamoDB.image }
+            observationIamgeUrl: { S: observationDynamoDB.image },
+            /*estimatedCover : {S: observationDynamoDB.estimatedCover},
+            estimatedArea : {S: observationDynamoDB.estimatedArea},
+            locationDescription : {S: observationDynamoDB.locationDescription},
+            ownership : {S: observationDynamoDB.ownership}*/
+            Notes: { S: JSON.stringify(observationDynamoDB.Notes) }
         },
     };
     try {
