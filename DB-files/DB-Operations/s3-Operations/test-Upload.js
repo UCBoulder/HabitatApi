@@ -43,7 +43,7 @@ function processFile(encodedFileString) {
         try {
             const chunks = yield (0, turn_file_multi_1.splitFileToChunks)(encodedFileString);
             const chunkBuffers = Buffer.concat(chunks);
-            const location = yield s3MultipartUpload("test-cow", "test-photos/" + id + ".jpg", chunkBuffers);
+            const location = yield s3MultipartUpload("test-cow", "test-photos/" + (0, uuid_1.v4)() + ".jpg", chunkBuffers);
             console.log(location); // For testing
             return location;
         }
